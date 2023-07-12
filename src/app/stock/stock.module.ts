@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
-import { StockController } from './stock.controller';
-import { StockService } from './stock.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { StockController } from './stock.controller';
 import { StockEntity } from './stock.entity';
+import { StockService } from './stock.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([StockEntity])],
