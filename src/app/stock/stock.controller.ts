@@ -9,7 +9,9 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
+import { CreateStockDto } from './dto/create.stock.dto';
 import { StockService } from './stock.service';
+import { UpdateStockDto } from './dto/update.stock.dto';
 
 @Controller('api/stock')
 export class StockController {
@@ -22,7 +24,7 @@ export class StockController {
   }
   @Post()
   @HttpCode(HttpStatus.CREATED)
-  async create(@Body() body) {
+  async create(@Body() body: CreateStockDto) {
     return await this.stockService.create(body);
   }
 
@@ -33,7 +35,7 @@ export class StockController {
   }
   @Patch(':id')
   @HttpCode(HttpStatus.OK)
-  async update(@Param('id') id: string, @Body() data) {
+  async update(@Param('id') id: string, @Body() data: UpdateStockDto) {
     return await this.stockService.updatedById(id, data);
   }
 

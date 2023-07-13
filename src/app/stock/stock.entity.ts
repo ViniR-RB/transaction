@@ -16,6 +16,8 @@ export class StockEntity {
     length: 35,
   })
   name_enterprise: string;
+  @Column({ name: 'code', length: 5, unique: true })
+  code: string;
   @Column({
     type: 'varchar',
     length: 18,
