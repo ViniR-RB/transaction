@@ -7,8 +7,8 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateStockDto } from './dto/create.stock.dto';
-import { StockEntity } from './stock.entity';
 import { UpdateStockDto } from './dto/update.stock.dto';
+import { StockEntity } from './stock.entity';
 
 @Injectable()
 export class StockService {
@@ -21,7 +21,7 @@ export class StockService {
     return await this.stockRepository.find();
   }
 
-  async findOneOrFail(id: string) {
+  async findOneById(id: string) {
     try {
       return await this.stockRepository.findOneOrFail({
         where: {
@@ -45,13 +45,13 @@ export class StockService {
   }
 
   async updatedById(id: string, data: UpdateStockDto) {
-    const stock = await this.findOneOrFail(id);
+    const stock = await this.findOneById(id);
     this.stockRepository.merge(stock, data);
     return await this.stockRepository.save(stock);
   }
 
   async deleteById(id: string) {
-    await this.findOneOrFail(id);
+    await this.findOneById(id);
     await this.stockRepository.delete(id);
   }
 }

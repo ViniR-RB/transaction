@@ -2,9 +2,13 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
+  Transaction,
   UpdateDateColumn,
 } from 'typeorm';
+import TransactionEntity from '../transaction/transaction.entity';
 
 @Entity({ name: 'stocks' })
 export class StockEntity {
@@ -34,4 +38,10 @@ export class StockEntity {
     name: 'updated_at',
   })
   updatedAt: string;
+
+  @OneToMany(
+    () => TransactionEntity,
+    (transaction: TransactionEntity) => transaction.id,
+  )
+  transactions: TransactionEntity[];
 }

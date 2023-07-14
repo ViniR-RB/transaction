@@ -1,11 +1,14 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { PassportModule } from '@nestjs/passport';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { AuthModule } from './app/auth/auth.module';
 import { StockModule } from './app/stock/stock.module';
 import { TransactionModule } from './app/transaction/transaction.module';
 import { UserModule } from './app/user/user.module';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
@@ -23,9 +26,12 @@ import { UserModule } from './app/user/user.module';
         synchronize: true,
       }),
     }),
+
+    PassportModule.register({ defaultStrategy: 'jwt' }),
     StockModule,
     TransactionModule,
     UserModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

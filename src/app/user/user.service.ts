@@ -7,6 +7,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
 import { Repository } from 'typeorm';
+import { LoginDto } from '../auth/dto/login.dto';
 import { CreateUserDto } from './dto/create.user.dto';
 import { UpdatePasswordUserDto } from './dto/updatePassword.user.dto';
 import UserEntity from './user.entity';
@@ -29,7 +30,37 @@ export class UserService {
       ],
     });
   }
-
+  async findOneByEmailAndPassword(data: LoginDto) {
+    try {
+      const user = await this.userRepository.findOneOrFail({
+        where: {
+          email: data.email,
+        },
+        select: [
+          'id',
+          'email',
+          'password',
+          'firstName',
+          'lastName',
+          'createdAt',
+          'updatedAt',
+        ],
+      });
+      if (!user) {
+        throw new Error('Email ou Senha Incorreto');
+      }
+      const comparePasswords = await bcrypt.compare(
+        data.password,
+        user.password,
+      );
+      if (!comparePasswords) {
+        throw new Error('Email ou Senha Incorreto');
+      }
+      return user;
+    } catch (error) {
+      throw new NotFoundException('Email ou Senha Incorreto');
+    }
+  }
   async findOneById(id: string) {
     try {
       return await this.userRepository.findOneOrFail({

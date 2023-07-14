@@ -1,17 +1,17 @@
 import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  HttpCode,
-  HttpStatus,
-  Param,
-  Patch,
-  Post,
+    Body,
+    Controller,
+    Delete,
+    Get,
+    HttpCode,
+    HttpStatus,
+    Param,
+    Patch,
+    Post,
 } from '@nestjs/common';
 import { CreateStockDto } from './dto/create.stock.dto';
-import { StockService } from './stock.service';
 import { UpdateStockDto } from './dto/update.stock.dto';
+import { StockService } from './stock.service';
 
 @Controller('api/stock')
 export class StockController {
@@ -31,7 +31,7 @@ export class StockController {
   @Get(':id')
   @HttpCode(HttpStatus.OK)
   async show(@Param('id') id: string) {
-    return await this.stockService.findOneOrFail(id);
+    return await this.stockService.findOneById(id);
   }
   @Patch(':id')
   @HttpCode(HttpStatus.OK)
