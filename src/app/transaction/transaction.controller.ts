@@ -6,7 +6,6 @@ import { TransactionService } from './transaction.service';
 @Controller('api/transaction')
 export class TransactionController {
   constructor(private readonly transactionService: TransactionService) {}
-  @UseGuards(AuthGuard)
   @Get()
   async index() {
     return await this.transactionService.findAll();

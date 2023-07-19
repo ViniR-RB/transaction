@@ -3,7 +3,7 @@ import {
   CreateDateColumn,
   Entity,
   JoinColumn,
-  OneToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -39,12 +39,12 @@ export default class TransactionEntity {
   taxB3: number;
   @Column({ type: 'enum', enum: OPERATION_CHOICES })
   operation: OPERATION_CHOICES;
-  @OneToOne(() => UserEntity, (user: UserEntity) => user.id, {
+  @OneToMany(() => UserEntity, (user: UserEntity) => user.id, {
     cascade: ['remove'],
   })
   @JoinColumn({ name: 'investor' })
   investor: UserEntity;
-  @OneToOne(() => StockEntity, (stock: StockEntity) => stock.id)
+  @OneToMany(() => StockEntity, (stock: StockEntity) => stock.id)
   @JoinColumn({ name: 'stock' })
   stock: StockEntity;
 
